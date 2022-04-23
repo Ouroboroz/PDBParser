@@ -3,11 +3,11 @@ import numpy as np
 
 class Residue:
 	'''
-	Structure that holds the represenation of a Residue
+	Structure that holds the representation of a Residue
 	'''
 	def __init__(self,name, resSeq, local=True):
 		'''
-		Abstraction of a residue in a protein
+		Initializes a Residue structure
 		A residue is defined by the name, chain ID, sequence number
 
 		Parameters:

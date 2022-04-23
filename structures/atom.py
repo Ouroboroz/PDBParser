@@ -1,7 +1,12 @@
+import numpy as np
+
 class Atom:
+	'''
+	Structures that holds the representation of an atom
+	'''
 	def __init__(self,name,element,coordinate,alpha = False):
 		'''
-		Abstraction of an atom in the protein's residue
+		Initializes an Atom object
 
 		Parameters:
 			name : str :: Name of the atom
@@ -12,18 +17,32 @@ class Atom:
 		'''
 		self.name = name
 		self.element = element
-		assert(len(coordinate) == 3)
+		if len(coordinate) != 3:
+			raise ValueError('Coordinate must be in 3D')
 		self.coordinate = coordinate
 		self.alpha = alpha
 		self.vec = None
 
 	def get_coordinate(self):
+		'''
+		Returns coordinate of the atom
+		'''
 		return self.coordinate
 
 	def get_vec(self):
+		'''
+		Returns the vector of the atom to the alpha carbon
+		'''
 		return self.vec
 
 	def set_vec(self, alpha_carbon):
+		'''
+		Sets the vector of the atom to the alpha carbon
+		Returns the vector
+
+		Parameters:
+			alpha_carbon : Atom :: Alpha carbon atom
+		'''
 		vec = self.coordinate - alpha_carbon.coordinate
 		self.vec = vec/np.linalg.norm(vec)
 		return self.vec
