@@ -14,7 +14,7 @@ class Residue:
 			name : str :: name of the residue
 			chainID : str :: chain identifier
 			resSeq : int :: residue sequence number
-			local : bool :: boolean if local system needs to be calculated
+			local : bool, default - True :: boolean if local system needs to be calculated
 		'''
 		self.name = name
 		self.resSeq = resSeq
@@ -39,7 +39,7 @@ class Residue:
 		Alpha carbon acts as the coordinate of the residue
 
 		Parameters:
-			carbon : Atom :: Carbon atom that represents the alpha carbon
+			carbon : Atom, default - None :: Carbon atom that represents the alpha carbon
 		'''
 		if carbon.name != 'CA':
 			raise ResidueError('Alpha Carbon must have name CA')
@@ -50,8 +50,8 @@ class Residue:
 		Sets the carboxyl group of the residue
 
 		Parameters:
-			carbon : Atom :: Carbon atom of the carboxyl
-			oxygen : Atom :: Oxygen atom of the carboxyl
+			carbon : Atom, default - None  :: Carbon atom of the carboxyl
+			oxygen : Atom, default - None  :: Oxygen atom of the carboxyl
 		'''
 		if carbon.name != 'C':
 			raise ResidueError('Carboxyl Carbon must have name C')
@@ -67,8 +67,8 @@ class Residue:
 		Sets the amino group of the residue
 
 		Parameters:
-			nitrogen : Atom :: Nitrogen atom of the amino
-			oxygen : Atom :: Oxygen atom of the amino
+			nitrogen : Atom, default - None  :: Nitrogen atom of the amino
+			oxygen : Atom, default - None  :: Oxygen atom of the amino
 		'''
 		if nitrogen is not None:
 			self.amino[0] = nitrogen

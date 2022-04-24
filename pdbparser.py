@@ -13,8 +13,8 @@ class PDBParser:
 		Call parse_pdb to parse a certain file
 
 		Parameters:
-			verbose : bool :: Debug output toggle during parsing
-			local : bool :: Calculate local system for residues
+			verbose : bool, default - False :: Debug output toggle during parsing
+			local : bool, default - True :: Calculate local system for residues
 
 		'''
 		self.verbose = verbose
@@ -81,7 +81,7 @@ class PDBParser:
 
 		Parameters:
 			path_to_pdb : string :: Path to .pdb file
-			pickle_path : string :: Optional path to store pickle
+			pickle_path : string, default - None :: Optional path to store pickle
 		'''
 		if pickle_path is None:
 			path = Path(path_to_pdb)

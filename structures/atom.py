@@ -12,7 +12,7 @@ class Atom:
 			name : str :: Name of the atom
 			element : str :: Element of the atom
 			coordinate : np array of dim 3 :: Coordinate of the atom in R3
-			alpha : bool ::  boolean if atom is the alpha carbon
+			alpha : bool, default - False ::  boolean if atom is the alpha carbon
 
 		'''
 		self.name = name
