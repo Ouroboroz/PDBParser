@@ -34,7 +34,7 @@ def calculate_vector_angle(point_1, point_2, point_3):
 
 	return angle
 
-def get_chain_residue_angles(chain):
+def get_chain_bond_angles(chain):
 	'''
 	Returns residue angles of a chain as a list
 
@@ -42,17 +42,17 @@ def get_chain_residue_angles(chain):
 		chain : Chain :: Chain structure of residues
 	'''
 	residues = chain.get_residues()
-	residue_angles = []
+	bond_angles = []
 	for residue_index in range(len(residues)-2):
 		residue_1_coordinate = residues[residue_index].get_coordinate()
 		residue_2_coordinate = residues[residue_index+1].get_coordinate()
 		residue_3_coordinate = residues[residue_index+2].get_coordinate()
-		residue_angle = calculate_vector_angle(residue_1_coordinate, residue_2_coordinate, 
+		bond_angle = calculate_vector_angle(residue_1_coordinate, residue_2_coordinate, 
 												residue_3_coordinate)
-		residue_angles.append(residue_angle)
-	return residue_angles
+		bond_angles.append(bond_angle)
+	return bond_angles
 
-def plot_residue_angles_distribution(chain, hist_bins=None, hist_range=None, hist_density=False):
+def plot_bond_angles_distribution(chain, hist_bins=None, hist_range=None, hist_density=False):
 	'''
 	Plots residue angles of a chain as a histogram
 
@@ -62,5 +62,5 @@ def plot_residue_angles_distribution(chain, hist_bins=None, hist_range=None, his
 		hist_range : tuple or None, default: None :: Same as plt range
 		hist_density: bool, default: False :: Same as plt density
 	'''
-	residue_angles = get_chain_residue_angles(chain)
-	plt.hist(residue_angles, bins=hist_bins, range=hist_range, density=hist_density)
+	bond_angles = get_chain_bond_angles(chain)
+	plt.hist(bond_angles, bins=hist_bins, range=hist_range, density=hist_density)
