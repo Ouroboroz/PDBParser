@@ -1,5 +1,6 @@
 import pickle
 from pathlib import Path
+import argparse
 import numpy as np
 from structures import Complex, Chain, Residue, Atom
 
@@ -7,7 +8,7 @@ class PDBParser:
 	'''
 	Parser for .pdb files into a Complex structure
 	'''
-	def __init__(self,verbose=False,local=True):
+	def __init__(self,verbose=False, local=True):
 		'''
 		Initializes PDBParser object
 		Call parse_pdb to parse a certain file
@@ -142,3 +143,32 @@ class PDBError(Exception):
 	'''
 	Exception thrown when there is a .pdb file related error
 	'''
+
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(prog='pdbparser',
+                                    usage='%(prog)s [options] path',
+                                    description='Process .pdb file to a pickle')
+	parser.add_argument('Path',
+                       metavar='path',
+                       type=str,
+                       help='the path to file')
+	parser.add_argument('--verbose', '-v', action='store_true',
+						help='set to have debug outputs')
+	parser.add_argument('--local', '-l', action='store_true',
+						help='set to calculate local system')
+	parser.add_argument('--pickle', '-p',
+						type=str,
+						help='path to pickle file')
+
+	args = parser.parse_args()
+	pdb_file_path_arg = args.Path
+	verbose_arg = args.verbose
+	local_arg = args.local
+	pickle_path_arg = args.pickle
+	pdbparser = PDBParser(verbose=verbose_arg, local=local_arg)
+
+	pdbparser.parse_pdb_to_pickle(path_to_pdb=pdb_file_path_arg, pickle_path=pickle_path_arg)
+
+
+
+
