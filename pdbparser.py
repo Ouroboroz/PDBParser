@@ -1,7 +1,7 @@
 import pickle
 from pathlib import Path
 import numpy as np
-from structures import *
+from structures import Complex, Chain, Residue, Atom
 
 class PDBParser:
 	'''
