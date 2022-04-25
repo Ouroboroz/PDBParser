@@ -1,3 +1,4 @@
+import os
 import pickle
 from pathlib import Path
 import argparse
@@ -15,7 +16,9 @@ class PDBParser:
 
 		Parameters:
 			verbose : int, default - False :: Debug output toggle during parsing
-						value controls the amount of debug statement
+						0 - No debug statements
+						1 - Major debug statements
+						2 - All debug statements
 			local : bool, default - True :: Calculate local system for residue
 		'''
 		self.verbose = verbose
@@ -48,7 +51,7 @@ class PDBParser:
 		current_chainID = None
 		current_resSeq = None
 		current_residue_atom_list = []
-		residue = Residue('init','residue')
+		residue = Residue('init','residue',local=False)
 
 		with path.open(encoding="utf-8") as file:
 			for line in file:
@@ -99,12 +102,13 @@ class PDBParser:
 		if pickle_path is None:
 			path = Path(path_to_pdb)
 			complex_file_name = path.stem
+			os.makedirs('./processedComplex',exist_ok=True)
 			pickle_path = './processedComplex/'+complex_file_name+'.pkl'
 		if self.verbose:
 			print(f'Parsing {path_to_pdb} to {pickle_path}')
 		complex_structure = self.parse_pdb(path_to_pdb)
 		path = Path(pickle_path)
-		with path.open() as f:
+		with path.open("wb") as f:
 			pickle.dump(complex_structure, f)
 
 def parse_pdb_from_pickle(pickle_path, verbose=False):
@@ -117,7 +121,7 @@ def parse_pdb_from_pickle(pickle_path, verbose=False):
 	path = Path(pickle_path)
 	if verbose:
 		print(f"Unpickling {pickle_path} into Complex")
-	with path.open() as f:
+	with path.open("r") as f:
 		complex_structure = pickle.dump(f)
 	return complex_structure
 
@@ -134,9 +138,9 @@ def parse_pdb_row(pdb_row):
 			'HETATOM':(0,5),
 			'serial':(6,10),
 			'name':(12,15),
-			'altLoc':16,
+			'altLoc':(16,16),
 			'resName':(17,19),
-			'chainID':21,
+			'chainID':(21,21),
 			'resSeq':(22,25),
 			'x':(30,37),
 			'y':(38,45),
