@@ -3,6 +3,9 @@ __pycache__/
 processedComplex/
 *.py[cod]
 
+#Pickle files of pdb
+.pkl
+
 # C extensions
 *.so
 
