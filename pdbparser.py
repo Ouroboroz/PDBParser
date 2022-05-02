@@ -122,7 +122,7 @@ def parse_pdb_from_pickle(pickle_path, verbose=False):
 	if verbose:
 		print(f"Unpickling {pickle_path} into Complex")
 	with path.open("r") as f:
-		complex_structure = pickle.dump(f)
+		complex_structure = pickle.load(f)
 	return complex_structure
 
 
@@ -151,7 +151,7 @@ def parse_pdb_row(pdb_row):
 		raise PDBError(f"Row has {row_length} characters but needs atleast 78")
 	parsed_pdb_row = {}
 	for item, indice_tup in indices.items():
-		parsed_pdb_row[item] = pdb_row[indice_tup[0]:indice_tup[1]+1]
+		parsed_pdb_row[item] = pdb_row[indice_tup[0]:indice_tup[1]+1].strip()
 	return parsed_pdb_row
 
 class FileNameError(Exception):

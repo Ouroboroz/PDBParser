@@ -44,6 +44,7 @@ class Residue:
 		if carbon.name != 'CA':
 			raise ResidueError('Alpha Carbon must have name CA')
 		self.alpha_carbon = carbon
+		self.coordinate = carbon.coordinate
 
 	def add_carboxyl(self, carbon=None, oxygen=None):
 		'''
@@ -53,9 +54,9 @@ class Residue:
 			carbon : Atom, default - None  :: Carbon atom of the carboxyl
 			oxygen : Atom, default - None  :: Oxygen atom of the carboxyl
 		'''
-		if carbon.name != 'C':
+		if carbon is not None and carbon.name != 'C':
 			raise ResidueError('Carboxyl Carbon must have name C')
-		if oxygen.name != 'O':
+		if oxygen is not None and  oxygen.name != 'O':
 			raise ResidueError('Carboxyl Oxygen must have name O')
 		if carbon is not None:
 			self.carboxyl[0] = carbon
@@ -87,8 +88,8 @@ class Residue:
 			raise ResidueError('Missing Carboxyl Oxygen')
 		if self.amino[0] is None:
 			raise ResidueError('Missing Amino Nitrogen')
-		if self.amino[1] is None:
-			raise ResidueError('Missing Amino Oxygen')
+		# if self.amino[1] is None:
+		# 	raise ResidueError('Missing Amino Hydrogen')
 
 	def calculate_system(self):
 		'''
@@ -98,7 +99,7 @@ class Residue:
 		self.check_valid_residue()
 		self.u = self.carboxyl[0].set_vec(self.alpha_carbon)
 		self.t = self.amino[0].set_vec(self.alpha_carbon)
-		u_cross_t = np.cross(self,self.u,self.t)
+		u_cross_t = np.cross(self.u,self.t)
 		self.n = u_cross_t/np.linalg.norm(u_cross_t)
 		self.v = np.cross(self.n,self.u)
 
